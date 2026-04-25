@@ -11,7 +11,7 @@ HTML5 & CSS3: For a clean and responsive interface.
 AwesomeAPI: To fetch live USD to BRL quotes.
 
 Goal: > My first step towards an international career, focusing on automation and financial tools.
-################################################################################################################################
+#############################################################
 À propos du projet :
 C'est un calculateur de salaire freelance qui utilise une API pour obtenir le taux de change en temps réel.
 
