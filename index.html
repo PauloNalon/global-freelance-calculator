@@ -10,30 +10,38 @@
 <body>
 
 
-    <div class="container">
+   <div class="container">
     <h1>Global Freelance Calculator 🌍</h1>
     
     <div class="input-group">
-        <label>Monthly Target (USD/EUR):</label>
-        <input type="number" id="monthlyValue" placeholder="Ex: 5000">
+        <label>Monthly Target:</label>
+        <div style="display: flex; gap: 10px;">
+            <input type="number" id="monthlyValue" placeholder="Ex: 5000" style="flex: 2;">
+            <select id="currency" style="flex: 1; border-radius: 5px; border: 1px solid #ccc;">
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="BRL">BRL (R$)</option>
+            </select>
+        </div>
     </div>
 
     <div class="input-group">
         <label>Hours per Day:</label>
-        <input type="number" id="hoursPerDay" placeholder="Ex: 6">
+        <input type="number" id="hoursPerDay" placeholder="Ex: 6" max="24" min="1">
     </div>
 
     <div class="input-group">
         <label>Days off per Month:</label>
-        <input type="number" id="daysOff" placeholder="Ex: 8 (Weekends)">
+        <input type="number" id="daysOff" placeholder="Ex: 8" max="31">
     </div>
 
     <button onclick="calculate()">Calculate Hourly Rate</button>
 
     <h2 id="result">Result: $0.00 / hour</h2>
-    </div>
+    <p id="conversionInfo" style="font-size: 0.8rem; color: #666;"></p>
+</div>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
     
 </body>
 </html>

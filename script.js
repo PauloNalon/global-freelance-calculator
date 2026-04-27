@@ -1,36 +1,61 @@
-function calculate() {
-    // 1. Captura os valores dos inputs
-    const monthlyTarget = parseFloat(document.getElementById('monthlyValue').value);
-    const hoursDay = parseFloat(document.getElementById('hoursPerDay').value);
-    const daysOffMonth = parseFloat(document.getElementById('daysOff').value) || 0; 
+async function calculate() {
+    const monthlyValue = parseFloat(document.getElementById('monthlyValue').value);
+    const hoursPerDay = parseFloat(document.getElementById('hoursPerDay').value);
+    const daysOff = parseFloat(document.getElementById('daysOff').value);
+    const currency = document.getElementById('currency').value;
+    const resultElement = document.getElementById('result');
 
-    // 2. Validação básica (Campos vazios)
-    if (!monthlyTarget || !hoursDay) {
-        alert("Please, fill in the target value and hours per day!");
+    // 1. Validação de Erros
+    if (isNaN(monthlyValue) || isNaN(hoursPerDay) || isNaN(daysOff)) {
+        resultElement.innerText = "Please fill all fields!";
+        resultElement.style.color = "red";
         return;
     }
 
-    // 3. Validação Avançada (Impedir dias de folga impossíveis)
-    if (daysOffMonth >= 30) {
-        const resultElement = document.getElementById('result');
-        resultElement.innerText = "Error: Days off exceed a month!";
+    if (hoursPerDay > 24) {
+        resultElement.innerText = "Error: A day only has 24 hours!";
         resultElement.style.color = "red";
-        return; // Para o código aqui se houver erro
+        return;
     }
 
-    // 4. Lógica do cálculo
-    const workingDays = 30 - daysOffMonth;
-    const totalHours = workingDays * hoursDay;
-    const hourlyRate = monthlyTarget / totalHours;
+    if (daysOff >= 30) {
+        resultElement.innerText = "Error: Days off exceed a month!";
+        resultElement.style.color = "red";
+        return;
+    }
 
-    // 5. Formatação Internacional (O toque de mestre!)
-    const formattedResult = hourlyRate.toLocaleString('en-US', { 
-        style: 'currency', 
-        currency: 'USD' 
-    });
+    // 2. Lógica do Cálculo
+    const businessDays = 30 - daysOff;
+    const totalHoursMonth = businessDays * hoursPerDay;
+    const hourlyRate = monthlyValue / totalHoursMonth;
 
-    // 6. Exibe o resultado e reseta a cor para preto (caso estivesse vermelho antes)
-    const resultElement = document.getElementById('result');
-    resultElement.innerText = `Result: ${formattedResult} / hour`;
-    resultElement.style.color = "#333";
+    // 3. Integração com API de Moedas (Opcional, mas muito pro!)
+    try {
+        // Buscamos a cotação do Dólar e Euro em relação ao Real
+        const response = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL');
+        const data = await response.json();
+        
+        let rateInBRL = "";
+        if (currency === "USD") {
+            const brlValue = hourlyRate * data.USDBRL.bid;
+            rateInBRL = ` | R$ ${brlValue.toFixed(2)}`;
+        } else if (currency === "EUR") {
+            const brlValue = hourlyRate * data.EURBRL.bid;
+            rateInBRL = ` | R$ ${brlValue.toFixed(2)}`;
+        }
+
+        // 4. Exibir Resultado Formatado
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: currency,
+        });
+
+        resultElement.innerText = `Result: ${formatter.format(hourlyRate)} / hour ${rateInBRL}`;
+        resultElement.style.color = "#28a745"; // Verde de sucesso
+
+    } catch (error) {
+        // Se a API falhar, mostra o cálculo básico
+        resultElement.innerText = `Result: ${currency} ${hourlyRate.toFixed(2)} / hour`;
+        console.error("Câmbio indisponível no momento.");
+    }
 }
