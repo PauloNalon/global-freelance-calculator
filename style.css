@@ -1,50 +1,117 @@
+:root {
+    --bg-page: #d1d5db;        /* Fundo externo mais sóbrio */
+    --paper-color: #fefae0;    /* Amarelado estilo papel vintage */
+    --line-color: #b7b7a4;     /* Cinza/Verde neutro para bordas */
+    --text-main: #433d3c;
+    --accent-wood: #a98467;    /* Tom de madeira/neutro para o botão */
+}
+
 body {
-    font-family: Arial, sans-serif;
+    background-color: var(--bg-page);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f4f4f9;
+    font-family: 'Courier New', Courier, monospace; /* Fonte estilo máquina/manual */
 }
 
-.container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    width: 350px;
+.calculator-card {
+    background-color: var(--paper-color);
+    width: 320px; /* Largura justa e fixa para parecer um aparelho/app */
+    padding: 25px;
+    border-radius: 15px;
+    /* Borda Dupla: cria o contorno que define o limite do "aparelho" */
+    border: 6px double var(--line-color); 
+    box-shadow: 10px 10px 20px rgba(0,0,0,0.15);
+    box-sizing: border-box;
+}
+
+h1 { 
+    font-size: 1.1rem; 
+    text-align: center; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--line-color);
+    padding-bottom: 10px;
+}
+
+.input-group {
+    margin-top: 15px;
+}
+
+label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-bottom: 4px;
 }
 
 input {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Garante que o padding não aumente a largura */
+    background: transparent;
+    border: none;
+    /* Linha inferior simulando caderno */
+    border-bottom: 1px solid var(--line-color); 
+    padding: 5px 0;
+    font-size: 1rem;
+    color: var(--text-main);
+    outline: none;
+}
+
+input:focus {
+    border-bottom: 2px solid var(--accent-wood);
 }
 
 button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px;
     width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background-color: var(--accent-wood);
+    color: #fefae0;
+    border: none;
     border-radius: 4px;
+    font-weight: bold;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s, transform 0.2s;
+    text-transform: uppercase;
 }
 
 button:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
+    background-color: #6c584c;
 }
 
-#result {
-    margin-top: 15px;
-    font-weight: bold;
-    font-size: 1.2em;
-    color: #333;
+.result-area {
+    margin-top: 25px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 1px dashed var(--line-color);
+    padding: 15px;
+    text-align: center;
+}
+
+.result-area h2 {
+    color: #6c584c;
+    font-size: 1.8rem;
+    margin: 5px 0;
+}
+
+
+.calculadora-card {
+    /* A borda propriamente dita */
+    border: 2px solid #2ecc71; /* Cor verde parecida com o seu desenho */
+    
+    /* Espaçamento interno para o texto não encostar na linha */
+    padding: 20px;
+    
+    /* Arredondamento leve nos cantos */
+    border-radius: 10px;
+    
+    /* Limita a largura para ficar centralizado e não espalhar na tela toda */
+    max-width: 350px;
+    margin: 20px auto;
+    
+    /* Cor de fundo opcional para destacar o card */
+    background-color: #f9f9f9;
+    
+    /* Alinha o texto dentro do card */
+    text-align: left;
 }
