@@ -1,16 +1,18 @@
-# global-freelance-calculator
-About the Project:
-This is a practical tool developed to calculate freelance earnings based on real-time currency exchange rates.
-
-Technologies used:
-
-JavaScript (ES6+): Handling logic and API integration.
-
-HTML5 & CSS3: For a clean and responsive interface.
-
-AwesomeAPI: To fetch live USD to BRL quotes.
-
-Goal: > My first step towards an international career, focusing on automation and financial tools.
+# Global Freelance Calculator
+A tool designed for freelancers to determine their ideal hourly rate based on
+monthly financial goals and work-life balance.
+## Features
+- Calculate hourly rates in multiple currencies (USD, EUR, BRL).
+- Adjustable parameters for monthly targets, hours per day, and days off.
+- Real-time conversion logic.
+## Tech Stack
+- **HTML5**: Semantic structure.
+- **CSS3**: Responsive and modern UI.
+- **JavaScript (ES6+)**: Calculation logic and DOM manipulation.
+## What I Learned
+During this project, I improved my skills in handling user inputs, implementing
+mathematical logic in JS, and creating a user-centric interface for a global
+context.
 
 
 
