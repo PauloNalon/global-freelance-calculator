@@ -8,7 +8,7 @@ import os
 def gerar_pdf_completo():
     try:
         # 1. PEGAR DADOS DA JANELA
-        cliente = ent_cliente.get().strip() or "Cliente_Genérico"
+        cliente = ent_cliente.get().strip() or "Cliente_Generico"
         renda_alvo = float(ent_renda.get())
         horas_dia = float(ent_horas.get())
         dias_mes = float(ent_dias.get())
@@ -29,7 +29,6 @@ def gerar_pdf_completo():
         if not os.path.exists("orcamentos"):
             os.makedirs("orcamentos")
         
-        # Nome do arquivo personalizado: Orcamento_Nome_Data.pdf
         timestamp = datetime.now().strftime("%Y%m%d_%H%M")
         nome_arquivo = f"orcamentos/Orcamento_{cliente}_{timestamp}.pdf"
 
@@ -42,10 +41,10 @@ def gerar_pdf_completo():
             pdf.image("logo.png", x=10, y=8, w=30)
             pdf.set_font("Arial", "B", 16)
             pdf.cell(45)
-            pdf.cell(150, 10, txt="ORÇAMENTO INTERNACIONAL", ln=True, align="L")
+            pdf.cell(150, 10, txt="ORCAMENTO INTERNACIONAL", ln=True, align="L")
         else:
             pdf.set_font("Arial", "B", 16)
-            pdf.cell(200, 10, txt="ORÇAMENTO INTERNACIONAL", ln=True, align="C")
+            pdf.cell(200, 10, txt="ORCAMENTO INTERNACIONAL", ln=True, align="C")
             
         pdf.ln(20)
         
@@ -56,27 +55,31 @@ def gerar_pdf_completo():
         pdf.cell(200, 10, txt=f"Data: {data_hoje}", ln=True)
         pdf.ln(5)
         pdf.cell(200, 10, txt=f"Valor/Hora Reais: R$ {v_brl:.2f}", ln=True)
-        pdf.cell(200, 10, txt=f"Valor/Hora Dólar: $ {v_usd:.2f}", ln=True)
-        pdf.cell(200, 10, txt=f"Valor/Hora Euro:  EUR {v_eur:.2f}", ln=True)
+        pdf.cell(200, 10, txt=f"Valor/Hora Dolar: $ {v_usd:.2f}", ln=True)
+        pdf.cell(200, 10, txt=f"Valor/Hora Euro: EUR {v_eur:.2f}", ln=True) # "EUR" garante compatibilidade
         
-        # 6. SALVAR
+        # 6. SALVAR E ABRIR PASTA
         pdf.output(nome_arquivo)
-        messagebox.showinfo("Sucesso!", f"Orçamento de {cliente} gerado!")
+        
+        # Pega o caminho absoluto da pasta e abre no explorador do Windows
+        caminho_pasta = os.path.abspath("orcamentos")
+        os.startfile(caminho_pasta) 
+
+        messagebox.showinfo("Sucesso!", f"Orcamento de {cliente} gerado!\nA pasta de arquivos foi aberta.")
 
     except ValueError:
-        messagebox.showerror("Erro", "Preencha os valores numéricos corretamente!")
+        messagebox.showerror("Erro", "Preencha os valores numericos corretamente!")
     except Exception as e:
         messagebox.showerror("Erro", f"Ocorreu um erro: {e}")
 
-# --- INTERFACE GRÁFICA ---
+# --- INTERFACE GRAFICA ---
 janela = tk.Tk()
 janela.title("Freelance Global UI")
-janela.geometry("400x550") # Aumentei um pouco a altura
+janela.geometry("400x550")
 janela.configure(bg="#f0f0f0")
 
-tk.Label(janela, text="Calculadora de Orçamentos", font=("Arial", 16, "bold"), bg="#f0f0f0").pack(pady=20)
+tk.Label(janela, text="Calculadora de Orcamentos", font=("Arial", 16, "bold"), bg="#f0f0f0").pack(pady=20)
 
-# Novo Campo: Nome do Cliente
 tk.Label(janela, text="Nome do Cliente:", bg="#f0f0f0", font=("Arial", 10, "bold")).pack()
 ent_cliente = tk.Entry(janela, width=30)
 ent_cliente.pack(pady=5)
@@ -89,11 +92,11 @@ tk.Label(janela, text="Horas de trabalho por dia:", bg="#f0f0f0").pack()
 ent_horas = tk.Entry(janela, width=30)
 ent_horas.pack(pady=5)
 
-tk.Label(janela, text="Dias de trabalho por mês:", bg="#f0f0f0").pack()
+tk.Label(janela, text="Dias de trabalho por mes:", bg="#f0f0f0").pack()
 ent_dias = tk.Entry(janela, width=30)
 ent_dias.pack(pady=5)
 
-btn_gerar = tk.Button(janela, text="GERAR ORÇAMENTO PERSONALIZADO", command=gerar_pdf_completo, 
+btn_gerar = tk.Button(janela, text="GERAR ORCAMENTO PERSONALIZADO", command=gerar_pdf_completo, 
                       bg="#28a745", fg="white", font=("Arial", 10, "bold"), padx=10, pady=10)
 btn_gerar.pack(pady=30)
 
